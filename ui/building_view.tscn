@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://70w38la0xqba"]
+
+[ext_resource type="Script" path="res://ui/building_view.gd" id="1_fypdb"]
+[ext_resource type="PackedScene" uid="uid://cg72rj881mcgr" path="res://ui/building_view_stat.tscn" id="2_bbc6k"]
+
+[node name="BuildingView" type="PanelContainer"]
+offset_right = 704.0
+offset_bottom = 448.0
+theme_type_variation = &"MarginPanelContainer"
+script = ExtResource("1_fypdb")
+
+[node name="WindowVBC" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="WindowVBC"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Центральное жилище"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="WindowVBC/TitleLabel"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "X"
+flat = true
+
+[node name="Content" type="HBoxContainer" parent="WindowVBC"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftColumn" type="VBoxContainer" parent="WindowVBC/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatsPanel" type="PanelContainer" parent="WindowVBC/Content/LeftColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"DarkMarginPanelContainer"
+
+[node name="Stats" type="VBoxContainer" parent="WindowVBC/Content/LeftColumn/StatsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Strength" parent="WindowVBC/Content/LeftColumn/StatsPanel/Stats" instance=ExtResource("2_bbc6k")]
+layout_mode = 2
+
+[node name="Comfort" parent="WindowVBC/Content/LeftColumn/StatsPanel/Stats" instance=ExtResource("2_bbc6k")]
+layout_mode = 2
+stat = 1
+
+[node name="Capacity" parent="WindowVBC/Content/LeftColumn/StatsPanel/Stats" instance=ExtResource("2_bbc6k")]
+layout_mode = 2
+stat = 2
+
+[node name="ImagePanel" type="PanelContainer" parent="WindowVBC/Content/LeftColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"DarkMarginPanelContainer"
+
+[node name="RightColumn" type="VBoxContainer" parent="WindowVBC/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StoragePanel" type="PanelContainer" parent="WindowVBC/Content/RightColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"DarkMarginPanelContainer"
+
+[node name="Storage" type="RichTextLabel" parent="WindowVBC/Content/RightColumn/StoragePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "Ресурс A   0/50
+Ресурс B   0/50
+Ресурс C   0/50
+
+Еда 0/50
+Боеприпасы 0/50"
+
+[node name="ConstructionsPanel" type="PanelContainer" parent="WindowVBC/Content/RightColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"DarkMarginPanelContainer"
+
+[connection signal="pressed" from="WindowVBC/TitleLabel/CloseButton" to="." method="_on_close_button_pressed"]

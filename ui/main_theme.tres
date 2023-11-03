@@ -1,0 +1,36 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dd4nucdvrtlhr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8j50h"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krmit"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12yso"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.14902, 0.14902, 0.14902, 1)
+shadow_size = 4
+
+[resource]
+DarkMarginPanelContainer/base_type = &"PanelContainer"
+DarkMarginPanelContainer/styles/panel = SubResource("StyleBoxFlat_8j50h")
+MarginPanelContainer/base_type = &"PanelContainer"
+MarginPanelContainer/styles/panel = SubResource("StyleBoxFlat_krmit")
+SmallLabel/base_type = &"Label"
+SmallLabel/constants/line_spacing = 0
+SmallLabel/font_sizes/font_size = 13
+SmallRichTextLabel/base_type = &"RichTextLabel"
+SmallRichTextLabel/font_sizes/normal_font_size = 12
+TooltipPanelContainer/base_type = &"PanelContainer"
+TooltipPanelContainer/styles/panel = SubResource("StyleBoxFlat_12yso")

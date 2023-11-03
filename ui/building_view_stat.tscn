@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg72rj881mcgr"]
+
+[ext_resource type="Texture2D" uid="uid://dbuh1f2bplgfn" path="res://ui/icons/arrow_up.png" id="1_ce57c"]
+[ext_resource type="Script" path="res://ui/building_view_stat.gd" id="1_tt6hs"]
+
+[node name="BuildingViewStat" type="HBoxContainer"]
+offset_right = 256.0
+offset_bottom = 64.0
+script = ExtResource("1_tt6hs")
+
+[node name="InfoLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SmallLabel"
+text = "ПРОЧНОСТЬ  ур. 1
+Защита стены: 10
+Защита жилища: 10"
+
+[node name="UpgradeButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("1_ce57c")
+flat = true
+
+[node name="UpgradePanel" type="PanelContainer" parent="UpgradeButton"]
+unique_name_in_owner = true
+visible = false
+top_level = true
+layout_mode = 2
+offset_left = 272.0
+offset_right = 448.0
+offset_bottom = 118.0
+theme_type_variation = &"TooltipPanelContainer"
+
+[node name="UpgradeLabel" type="RichTextLabel" parent="UpgradeButton/UpgradePanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(224, 0)
+layout_mode = 2
+theme_type_variation = &"SmallRichTextLabel"
+bbcode_enabled = true
+text = "Ур. 1 -> 2
+Защита стены: 10 -> 15
+Защита жилища: 10 -> 15
+
+Стоимость:
+10 x Ресурс A"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Подтверждение"
+cancel_button_text = "Отмена"
+
+[connection signal="mouse_entered" from="UpgradeButton" to="." method="_on_upgrade_button_mouse_entered"]
+[connection signal="mouse_exited" from="UpgradeButton" to="." method="_on_upgrade_button_mouse_exited"]
+[connection signal="pressed" from="UpgradeButton" to="." method="_on_upgrade_button_pressed"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
