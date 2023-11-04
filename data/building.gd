@@ -1,7 +1,7 @@
 @tool
 class_name Building
 extends Resource
-## Жилище.
+## Модель данных жилища.
 
 
 ## Характеристики жилища.
@@ -192,6 +192,8 @@ func set_stat_level(stat: Stat, level: int) -> void:
 	if stat == Stat.CAPACITY:
 		@warning_ignore("static_called_on_instance")
 		_storage_size = get_stat_params(stat, level).storage_size
+		for res_type in ResourceType.size():
+			_resources[res_type] = mini(_resources[res_type], _storage_size)
 		notify_property_list_changed()
 	emit_changed()
 
@@ -201,7 +203,7 @@ func get_stat_level(stat: Stat) -> int:
 	return _stat_levels[stat]
 
 
-## Возвращает размер слота ресурса на складе.
+## Возвращает максимальное количество ресурса на складе.
 func get_storage_size() -> int:
 	return _storage_size
 
@@ -218,7 +220,7 @@ func get_resource_amount(res_type: ResourceType) -> int:
 	return _resources[res_type]
 
 
-## Возвращает возможно ли повысить уровень характеристики [param stat].
+## Возвращает, возможно ли повысить уровень характеристики [param stat].
 func can_upgrade(stat: Stat) -> bool:
 	var new_level: int = get_stat_level(stat) + 1
 	if new_level > STAT_MAX_LEVEL:

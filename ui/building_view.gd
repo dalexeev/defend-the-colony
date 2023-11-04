@@ -1,10 +1,6 @@
 class_name BuildingView
 extends PanelContainer
-## Интерфейс жилища.
-
-
-var _stats: VBoxContainer
-var _storage: RichTextLabel
+## Контрол для просмотра и изменения жилища.
 
 
 ## Жилище, отображаемое в данный момент.
@@ -18,6 +14,9 @@ var _storage: RichTextLabel
 		if is_instance_valid(building):
 			building.changed.connect(_update)
 		_update()
+
+var _stats: VBoxContainer
+var _storage: RichTextLabel
 
 
 func _notification(what: int) -> void:

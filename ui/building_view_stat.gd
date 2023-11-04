@@ -13,7 +13,7 @@ extends HBoxContainer
 			building.changed.connect(_update)
 		_update()
 
-## Статистика жилища.
+## Характеристика жилища, отображаемая в данный момент.
 @export var stat: Building.Stat
 
 var _info_label: Label
