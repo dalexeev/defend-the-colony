@@ -31,6 +31,6 @@ SmallLabel/base_type = &"Label"
 SmallLabel/constants/line_spacing = 0
 SmallLabel/font_sizes/font_size = 13
 SmallRichTextLabel/base_type = &"RichTextLabel"
-SmallRichTextLabel/font_sizes/normal_font_size = 12
+SmallRichTextLabel/font_sizes/normal_font_size = 13
 TooltipPanelContainer/base_type = &"PanelContainer"
 TooltipPanelContainer/styles/panel = SubResource("StyleBoxFlat_12yso")

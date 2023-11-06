@@ -29,8 +29,8 @@ visible = false
 top_level = true
 layout_mode = 2
 offset_left = 272.0
-offset_right = 448.0
-offset_bottom = 118.0
+offset_right = 512.0
+offset_bottom = 128.0
 theme_type_variation = &"TooltipPanelContainer"
 
 [node name="UpgradeLabel" type="RichTextLabel" parent="UpgradeButton/UpgradePanel"]

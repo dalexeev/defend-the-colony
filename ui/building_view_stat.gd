@@ -14,7 +14,10 @@ extends HBoxContainer
 		_update()
 
 ## Характеристика жилища, отображаемая в данный момент.
-@export var stat: Building.Stat
+@export var stat: Building.Stat:
+	set(value):
+		stat = value
+		_update()
 
 var _info_label: Label
 var _upgrade_button: Button
@@ -52,15 +55,15 @@ func _update() -> void:
 	_upgrade_label.clear()
 
 	var new_level: int = level + 1
-	if new_level >= Building.STAT_MAX_LEVEL:
+	if new_level > Building.STAT_MAX_LEVEL:
 		_upgrade_label.add_text("Ур. %d - Максимальный уровень!" % level)
 	else:
-		var new_params: Dictionary = Building.get_stat_params(stat, new_level)
 		_upgrade_label.add_text("Ур. %d → " % level)
 		_upgrade_label.push_color(Color.GREEN)
 		_upgrade_label.add_text(str(new_level))
 		_upgrade_label.pop() # color
 
+		var new_params: Dictionary = Building.get_stat_params(stat, new_level)
 		for param_id in new_params:
 			_upgrade_label.add_text("\n%s: %d → " % [
 				Building.get_stat_param_name(param_id),

@@ -11,6 +11,16 @@ enum Stat {
 	CAPACITY, ## Вместительность.
 }
 
+## Параметры характеристик жилища.
+enum StatParam {
+	WALL_PROTECTION,     ## Защита стены.
+	BUILDING_PROTECTION, ## Защита жилища.
+	FIGHTERS_ATTACK,     ## Атака бойцов.
+	CONSTRUCTION_ATTACK, ## Атака сооружений.
+	STORAGE_SIZE,        ## Мест на складе.
+	CONSTRUCTION_COUNT,  ## Доступно сооружений.
+}
+
 ## Тип ресурса.
 enum ResourceType {
 	A,    ## Ресурс A.
@@ -44,17 +54,38 @@ static func get_stat_name(stat: Stat) -> String:
 	return ""
 
 
-## Возвращает название параметра [param param_id].
-static func get_stat_param_name(param_id: String) -> String:
-	match param_id:
-		"wall_protection":     return "Защита стены"
-		"building_protection": return "Защита жилища"
-		"fighters_attack":     return "Атака бойцов"
-		"construction_attack": return "Атака сооружений"
-		"storage_size":        return "Мест на складе"
-		"construction_count":  return "Доступно сооружений"
+## Возвращает название параметра [param stat_param].
+static func get_stat_param_name(stat_param: StatParam) -> String:
+	match stat_param:
+		StatParam.WALL_PROTECTION:     return "Защита стены"
+		StatParam.BUILDING_PROTECTION: return "Защита жилища"
+		StatParam.FIGHTERS_ATTACK:     return "Атака бойцов"
+		StatParam.CONSTRUCTION_ATTACK: return "Атака сооружений"
+		StatParam.STORAGE_SIZE:        return "Мест на складе"
+		StatParam.CONSTRUCTION_COUNT:  return "Доступно сооружений"
 	breakpoint
 	return ""
+
+
+## Возвращает параметры характеристики [param stat] для уровня [param level]
+## в виде словаря [enum StatParam] -> [int].
+static func get_stat_params(stat: Stat, level: int) -> Dictionary:
+	assert(STAT_MIN_LEVEL <= level and level <= STAT_MAX_LEVEL)
+	var result: Dictionary = {}
+	var lv: int = level - STAT_MIN_LEVEL
+	match stat:
+		Stat.STRENGTH:
+			result[StatParam.WALL_PROTECTION] = 10 + lv
+			result[StatParam.BUILDING_PROTECTION] = 10 + lv
+		Stat.COMFORT:
+			result[StatParam.FIGHTERS_ATTACK] = 1 + lv
+			result[StatParam.CONSTRUCTION_ATTACK] = 1 + lv
+		Stat.CAPACITY:
+			result[StatParam.STORAGE_SIZE] = 50 + 5 * lv
+			result[StatParam.CONSTRUCTION_COUNT] = 7 + lv
+		_:
+			breakpoint
+	return result
 
 
 ## Возвращает стоимость повышения уровня характеристики [param stat]
@@ -96,33 +127,12 @@ static func get_resource_name(res_type: ResourceType) -> String:
 	return ""
 
 
-## Возвращает параметры характеристики [param stat] для уровня [param level]
-## в виде словаря [code]String -> int[/code]. Ключами являются ID параметров.
-static func get_stat_params(stat: Stat, level: int) -> Dictionary:
-	assert(STAT_MIN_LEVEL <= level and level <= STAT_MAX_LEVEL)
-	var result: Dictionary = {}
-	var lv: int = level - STAT_MIN_LEVEL
-	match stat:
-		Stat.STRENGTH:
-			result.wall_protection = 10 + lv
-			result.building_protection = 10 + lv
-		Stat.COMFORT:
-			result.fighters_attack = 1 + lv
-			result.construction_attack = 1 + lv
-		Stat.CAPACITY:
-			result.storage_size = 50 + 5 * lv
-			result.construction_count = 7 + lv
-		_:
-			breakpoint
-	return result
-
-
 func _init() -> void:
 	_stat_levels.resize(Stat.size())
 	_stat_levels.fill(STAT_MIN_LEVEL)
 
 	@warning_ignore("static_called_on_instance")
-	_storage_size = get_stat_params(Stat.CAPACITY, STAT_MIN_LEVEL).storage_size
+	_storage_size = get_stat_params(Stat.CAPACITY, STAT_MIN_LEVEL)[StatParam.STORAGE_SIZE]
 
 	_resources.resize(ResourceType.size())
 	_resources.fill(0)
@@ -191,7 +201,7 @@ func set_stat_level(stat: Stat, level: int) -> void:
 	_stat_levels[stat] = level
 	if stat == Stat.CAPACITY:
 		@warning_ignore("static_called_on_instance")
-		_storage_size = get_stat_params(stat, level).storage_size
+		_storage_size = get_stat_params(stat, level)[StatParam.STORAGE_SIZE]
 		for res_type in ResourceType.size():
 			_resources[res_type] = mini(_resources[res_type], _storage_size)
 		notify_property_list_changed()

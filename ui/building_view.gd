@@ -33,7 +33,7 @@ func _update() -> void:
 
 	_storage.push_table(2)
 	var storage_size: int = building.get_storage_size()
-	for res_type in building.ResourceType.size():
+	for res_type in Building.ResourceType.size():
 		_storage.push_cell()
 		_storage.add_image(Building.get_resource_icon(res_type))
 		_storage.add_text(" " + Building.get_resource_name(res_type))
